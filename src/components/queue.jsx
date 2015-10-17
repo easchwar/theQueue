@@ -57,18 +57,21 @@ module.exports = React.createClass({
   render: function() {
     return(
       <div>
-        <h3> QUEUEUEUEUEUE </h3>
-        <ul>
-          {
-            this.state.list.map(function(item) {
-              return( <Item key={item.id} removeItem={this.removeItem} item={item} />)
-            }.bind(this))
-          }
-        </ul>
-          
-        <form onSubmit={this.handleSubmit}>
-          <input onChange={this.handleInput} value={this.state.formInput} /> 
-        </form>
+        <h1> The Queue </h1>
+        <div className="queue">
+          <ul>
+            {
+              this.state.list.map(function(item,id) {
+                return( <Item key={item.id} color={id % 2 === 0 ? 'cornflowerblue' : 'aliceblue'} removeItem={this.removeItem} item={item} />)
+              }.bind(this))
+            }
+          </ul>
+          <br/>
+          <h3> Ask your question! </h3>
+          <form onSubmit={this.handleSubmit}>
+            <input onChange={this.handleInput} value={this.state.formInput} /> 
+          </form>
+        </div>
       </div>
       );
   }

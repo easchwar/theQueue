@@ -8,7 +8,16 @@ module.exports = React.createClass({
 
   render: function() {
     return(
-      <li onClick={this.removeItem}> {this.props.item.message} </li>
+      <li className="item" style={{listStyle: 'none', background: this.props.color}} >
+        <span>
+          {this.props.item.message} 
+        </span> 
+        <button 
+          style={{float: 'right'}} 
+          onClick={this.removeItem}> 
+            Complete! 
+        </button>
+      </li>
     );
   }
 });
