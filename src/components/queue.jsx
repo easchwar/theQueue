@@ -1,6 +1,7 @@
 var React = require('react');
 var Item = require('./item.jsx');
 var socket = io();
+var myMongo = require('../db/connection.js');
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -15,6 +16,10 @@ module.exports = React.createClass({
     socket.on('remove item', function(id) {
       this.removeItem(id);
     }.bind(this));
+  },
+
+  mongoAll: function() {
+    myMongo.all();
   },
 
   handleInput: function(e) {
@@ -72,6 +77,7 @@ module.exports = React.createClass({
             <input onChange={this.handleInput} value={this.state.formInput} /> 
           </form>
         </div>
+        <button onClick={this.mongoAll}> mongo lets go </button>
       </div>
       );
   }

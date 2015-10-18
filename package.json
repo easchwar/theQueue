@@ -5,11 +5,13 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "go": "webpack; node index.js"
   },
   "author": "Eric Schwarzenbach",
   "license": "ISC",
   "dependencies": {
+    "mongo": "^0.1.0",
     "mongodb": "^2.0.46",
     "mongoose": "^4.1.11",
     "react": "^0.14.0",
@@ -21,6 +23,7 @@
     "babel-loader": "^5.3.2",
     "css-loader": "^0.19.0",
     "express": "^4.13.3",
+    "node-loader": "^0.5.0",
     "style-loader": "^0.12.4",
     "webpack": "^1.12.2"
   }
