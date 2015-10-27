@@ -9,6 +9,7 @@
   "author": "Eric Schwarzenbach",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "fs": "0.0.2",
     "mongo": "^0.1.0",
     "mongodb": "^2.0.46",

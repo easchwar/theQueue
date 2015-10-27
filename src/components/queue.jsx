@@ -1,5 +1,6 @@
 var React = require('react');
 var Item = require('./item.jsx');
+var ApiUtil = require('../util/api.js');
 var reqwest = require('reqwest');
 var socket = io();
 
@@ -16,33 +17,15 @@ module.exports = React.createClass({
     socket.on('remove item', function(id) {
       this.removeItem(id);
     }.bind(this));
+
+    this.getQueue();
   },
 
   getQueue: function() {
-    reqwest({
-      url: '/queue',
-      method: 'get',
-      success: function(resp) {
-        console.log(resp);
-      },
-      error: function(resp) {
-        console.log(resp);
-      }
-    });
-  },
-
-  addMessage: function(msg) {
-    reqwest({
-      url: '/queue',
-      method: 'post',
-      success: function(resp) {
-        console.log("success");
-        console.log(resp);
-      },
-      error: function(resp) {
-        console.log(resp);
-      }
-    });
+    ApiUtil.fetch(function(resp) {
+      console.log('success');
+      this.setState({list: resp});
+    }.bind(this));
   },
 
   handleInput: function(e) {
@@ -58,8 +41,11 @@ module.exports = React.createClass({
       message: this.state.formInput 
     };
 
-    socket.emit('add item', item); 
-    this.addItem(item);
+    ApiUtil.addItem(item, function(resp) {
+      console.log(resp);
+      this.addItem(item);
+      socket.emit('add item', item); 
+    }.bind(this));
     this.setState({ formInput: "" });
   },
 
@@ -71,21 +57,23 @@ module.exports = React.createClass({
 
   removeItem: function(id) {
     console.log(id);
-    var list = this.state.list;
-    for (var i = 0; i < list.length; i++) {
-      if (list[i].id === id) {
-        this.state.list.splice(i, 1);
-        socket.emit('remove item', id);
-        this.setState({list: this.state.list});
-        break; 
+    ApiUtil.completeItem(id, function(resp) {
+      var list = this.state.list;
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].id === id) {
+          this.state.list.splice(i, 1);
+          socket.emit('remove item', id);
+          this.setState({list: this.state.list});
+          break; 
+        }
       }
-    }
+    }.bind(this));
   },
 
   render: function() {
     return(
       <div>
-        <h1 onClick={this.addMessage} > The Queue </h1>
+        <h1> The Queue </h1>
         <div className="queue">
           <ul>
             {
@@ -100,7 +88,7 @@ module.exports = React.createClass({
             <input onChange={this.handleInput} value={this.state.formInput} /> 
           </form>
         </div>
-        <button onClick={this.mongoAll}> mongo lets go </button>
+        <button onClick={this.getQueue}> mongo lets go </button>
       </div>
       );
   }
