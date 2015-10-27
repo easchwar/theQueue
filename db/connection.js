@@ -21,10 +21,12 @@ var insertItem = function(db, callback) {
 };
 
 module.exports = {
-  all: function() {
+  all: function(cb) {
     MongoClient.connect(url, function(err, db) {
       assert.equal(null, err);
-      console.log(findItems(db));
+      items = findItems(db);
+      console.log(items);
+      cb(items);
     });
   },
 

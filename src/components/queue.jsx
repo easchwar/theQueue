@@ -1,7 +1,7 @@
 var React = require('react');
 var Item = require('./item.jsx');
+var reqwest = require('reqwest');
 var socket = io();
-var myMongo = require('../db/connection.js');
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -18,8 +18,31 @@ module.exports = React.createClass({
     }.bind(this));
   },
 
-  mongoAll: function() {
-    myMongo.all();
+  getQueue: function() {
+    reqwest({
+      url: '/queue',
+      method: 'get',
+      success: function(resp) {
+        console.log(resp);
+      },
+      error: function(resp) {
+        console.log(resp);
+      }
+    });
+  },
+
+  addMessage: function(msg) {
+    reqwest({
+      url: '/queue',
+      method: 'post',
+      success: function(resp) {
+        console.log("success");
+        console.log(resp);
+      },
+      error: function(resp) {
+        console.log(resp);
+      }
+    });
   },
 
   handleInput: function(e) {
@@ -62,7 +85,7 @@ module.exports = React.createClass({
   render: function() {
     return(
       <div>
-        <h1> The Queue </h1>
+        <h1 onClick={this.addMessage} > The Queue </h1>
         <div className="queue">
           <ul>
             {

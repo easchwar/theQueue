@@ -2,6 +2,7 @@ var path = require('path');
 
 module.exports = {
   entry: "./src/theQueue.jsx",
+  devtool: 'source-map',
   output: {
     path: path.join(__dirname, "public"),
     filename: "bundle.js"
