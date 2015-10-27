@@ -6,7 +6,7 @@ var port = process.env.PORT || 3000;
 var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 
-var url = 'mongodb://localhost:27017/MY_DB';
+var url = process.env.MONGO_LAB_URI || 'mongodb://localhost:27017/MY_DB';
 
 var bodyParser = require('body-parser');
 app.use( bodyParser.json() );       // to support JSON-encoded bodies

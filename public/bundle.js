@@ -19931,8 +19931,8 @@
 	
 	var React = __webpack_require__(5);
 	var Item = __webpack_require__(163);
-	var ApiUtil = __webpack_require__(166);
-	var reqwest = __webpack_require__(164);
+	var ApiUtil = __webpack_require__(164);
+	var reqwest = __webpack_require__(165);
 	var socket = io();
 	
 	module.exports = React.createClass({
@@ -20085,6 +20085,57 @@
 /* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	var reqwest = __webpack_require__(165);
+	
+	module.exports = {
+	  fetch: function fetch(cb) {
+	    reqwest({
+	      url: '/queue',
+	      method: 'get',
+	      success: function success(resp) {
+	        cb(resp);
+	      },
+	      error: function error(resp) {
+	        console.log(resp);
+	      }
+	    });
+	  },
+	
+	  addItem: function addItem(msg, cb) {
+	    reqwest({
+	      url: '/queue',
+	      method: 'post',
+	      data: msg,
+	      success: (function (resp) {
+	        cb(resp);
+	      }).bind(this),
+	      error: function error(resp) {
+	        console.log(resp);
+	      }
+	    });
+	  },
+	
+	  completeItem: function completeItem(id, cb) {
+	    reqwest({
+	      url: '/complete',
+	      method: 'post',
+	      data: { id: id },
+	      success: function success(resp) {
+	        cb(resp);
+	      },
+	      error: function error(resp) {
+	        console.log(resp);
+	      }
+	    });
+	  }
+	};
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 	  * Reqwest! A general purpose XHR connection manager
 	  * license MIT (c) Dustin Diaz 2015
@@ -20106,7 +20157,7 @@
 	  } else {
 	    var XHR2
 	    try {
-	      XHR2 = __webpack_require__(165)
+	      XHR2 = __webpack_require__(166)
 	    } catch (ex) {
 	      throw new Error('Peer dependency `xhr2` required! Please npm install xhr2')
 	    }
@@ -20718,61 +20769,10 @@
 
 
 /***/ },
-/* 165 */
+/* 166 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
-
-/***/ },
-/* 166 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var reqwest = __webpack_require__(164);
-	
-	module.exports = {
-	  fetch: function fetch(cb) {
-	    reqwest({
-	      url: '/queue',
-	      method: 'get',
-	      success: function success(resp) {
-	        cb(resp);
-	      },
-	      error: function error(resp) {
-	        console.log(resp);
-	      }
-	    });
-	  },
-	
-	  addItem: function addItem(msg, cb) {
-	    reqwest({
-	      url: '/queue',
-	      method: 'post',
-	      data: msg,
-	      success: (function (resp) {
-	        cb(resp);
-	      }).bind(this),
-	      error: function error(resp) {
-	        console.log(resp);
-	      }
-	    });
-	  },
-	
-	  completeItem: function completeItem(id, cb) {
-	    reqwest({
-	      url: '/complete',
-	      method: 'post',
-	      data: { id: id },
-	      success: function success(resp) {
-	        cb(resp);
-	      },
-	      error: function error(resp) {
-	        console.log(resp);
-	      }
-	    });
-	  }
-	};
 
 /***/ }
 /******/ ]);
