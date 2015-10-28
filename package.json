@@ -2,9 +2,10 @@
   "name": "theQueue",
   "version": "0.0.1",
   "description": "a queue app",
-  "main": "webpack.config.js",
+  "main": "./public/bundle.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "web": "node server.js"
   },
   "author": "Eric Schwarzenbach",
   "license": "ISC",
